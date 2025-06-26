@@ -1,0 +1,19 @@
+{
+    "pages": [
+        {
+            "route": "/"
+        },
+        {
+            "route": "/pricing"
+        },
+        {
+            "route": "/about"
+        },
+        {
+            "route": "/contact"
+        }
+    ],
+    "theme": {
+        "primary": "#2563EB"
+    }
+}
