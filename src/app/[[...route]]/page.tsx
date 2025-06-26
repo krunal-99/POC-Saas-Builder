@@ -1,10 +1,6 @@
 import { notFound } from 'next/navigation';
 import { getBlueprint } from '@/lib/blueprint';
 
-type PageProps = {
-  params: { route: string[] | undefined };
-};
-
 export async function generateStaticParams() {
   const blueprint = await getBlueprint();
   return blueprint.pages.map((page) => ({
@@ -12,7 +8,7 @@ export async function generateStaticParams() {
   }));
 }
 
-export default async function DynamicPage({ params }: PageProps) {
+export default async function DynamicPage({ params }: { params: { route?: string[] } }) {
   const blueprint = await getBlueprint();
   const currentRoute = params.route && params.route.length > 0 ? `/${params.route.join('/')}` : '/';
   const pageExists = blueprint.pages.some((page) => page.route === currentRoute);
