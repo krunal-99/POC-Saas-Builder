@@ -8,9 +8,14 @@ export async function generateStaticParams() {
   }));
 }
 
-export default async function DynamicPage({ params }: { params: { route?: string[] } }) {
+export default async function DynamicPage({
+  params,
+}: {
+  params: Promise<{ route?: string[] }>;
+}) {
+   const { route } = await params;
   const blueprint = await getBlueprint();
-  const currentRoute = params.route && params.route.length > 0 ? `/${params.route.join('/')}` : '/';
+  const currentRoute = route ? `/${route.join("/")}` : "/";
   const pageExists = blueprint.pages.some((page) => page.route === currentRoute);
 
   if (!pageExists) {
