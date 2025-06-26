@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { getBlueprint } from "../../../lib/blueprint";
+import { getBlueprint } from "../../lib/blueprint";
 
 export async function generateStaticParams() {
   const blueprint = await getBlueprint();
@@ -18,8 +18,6 @@ export default async function DynamicPage({
   const pageExists = blueprint.pages.some(
     (page) => page.route === currentRoute
   );
-
-  console.log("currentRoute", currentRoute);
   if (!pageExists) {
     notFound();
   }

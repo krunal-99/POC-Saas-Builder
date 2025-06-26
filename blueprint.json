@@ -11,6 +11,9 @@
         },
         {
             "route": "/contact"
+        },
+        {
+            "route": "/kisan"
         }
     ],
     "theme": {
