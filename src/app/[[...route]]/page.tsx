@@ -1,23 +1,22 @@
-import { notFound } from "next/navigation";
-import { getBlueprint } from "../../lib/blueprint";
+import { notFound } from 'next/navigation';
+import { getBlueprint } from '@/lib/blueprint';
+
+type PageProps = {
+  params: { route: string[] | undefined };
+};
 
 export async function generateStaticParams() {
   const blueprint = await getBlueprint();
   return blueprint.pages.map((page) => ({
-    route: page.route === "/" ? [] : page.route.split("/").filter(Boolean),
+    route: page.route === '/' ? [] : page.route.split('/').filter(Boolean),
   }));
 }
 
-export default async function DynamicPage({
-  params,
-}: {
-  params: { route?: string[] };
-}) {
+export default async function DynamicPage({ params }: PageProps) {
   const blueprint = await getBlueprint();
-  const currentRoute = params.route ? `/${params.route.join("/")}` : "/";
-  const pageExists = blueprint.pages.some(
-    (page) => page.route === currentRoute
-  );
+  const currentRoute = params.route && params.route.length > 0 ? `/${params.route.join('/')}` : '/';
+  const pageExists = blueprint.pages.some((page) => page.route === currentRoute);
+
   if (!pageExists) {
     notFound();
   }
@@ -36,11 +35,9 @@ export default async function DynamicPage({
             backgroundImage: `linear-gradient(45deg, ${blueprint.theme.primary}, ${blueprint.theme.primary}80)`,
           }}
         >
-          {currentRoute === "/"
-            ? "Welcome to the Home Page"
-            : `Welcome to ${currentRoute}`}
+          {currentRoute === '/' ? 'Welcome to the Home Page' : `Welcome to ${currentRoute}`}
         </h1>
-        {currentRoute !== "/" && (
+        {currentRoute !== '/' && (
           <p className="mt-6 text-lg text-gray-600 text-center leading-relaxed">
             This is the {currentRoute} page. Explore and enjoy the content!
           </p>
